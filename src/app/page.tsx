@@ -2,9 +2,8 @@
 
 import Navbar from "@/components/Navbar";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 import axios from 'axios';
-import { format, fromUnixTime, parseISO, set } from 'date-fns';
+import { format, fromUnixTime, parseISO } from 'date-fns';
 import Container from "@/components/Container";
 import { convertKelvinToCelcius } from "@/utils/convertKelvintoCelcius";
 import WeatherIcon from "@/components/WeatherIcon";
@@ -16,6 +15,7 @@ import ForcastWeatherDetail from "@/components/ForcastWeatherDetail";
 import { useAtom } from "jotai";
 import { loadingCityAtom, placeAtom } from "./atom";
 import { useEffect } from "react";
+import Footer from "@/components/Footer";
 
 
 // https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude={part}&appid={NEXT_PUBLIC_WEATHER_KEY}
@@ -86,7 +86,7 @@ type CityInfo = {
 
 export default function Home() {
 
-  const [place, setPlace] = useAtom(placeAtom);
+  const [place, __] = useAtom(placeAtom);
   const [loadingCity, _] = useAtom(loadingCityAtom)
 
   const { isLoading, error, data, refetch } = useQuery<WeatherData>(
@@ -94,7 +94,7 @@ export default function Home() {
       queryKey: ['repoData'],
       queryFn: async () => {
         const { data } = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${place}&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}&cnt=56`);
-        // const { data } = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${place}&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}`);
+
         return data;
       },
     }
@@ -254,9 +254,8 @@ export default function Home() {
             </section>
           </>
         )}
-
-
       </main>
+      <Footer />
     </div>
   );
 }

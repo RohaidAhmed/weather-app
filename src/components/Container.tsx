@@ -1,7 +1,6 @@
 import { cn } from '@/utils/cn'
 import React from 'react'
 
-type Props = {}
 
 export default function Container(props: React.HTMLProps<HTMLDivElement>) {
     return (

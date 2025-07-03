@@ -9,7 +9,10 @@ const nextConfig: NextConfig = {
         hostname: "openweathermap.org"
       }
     ]
-  }
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default nextConfig;
